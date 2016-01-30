@@ -1,0 +1,19 @@
+{
+  "name": "bordered-image-detector",
+  "version": "1.0.0",
+  "description": "Badly and stupidly detects if an image contains a uniform border",
+  "main": "index.js",
+  "scripts": {
+    "test": "node tests/test.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "async": "^1.5.2",
+    "color-difference": "^0.3.4",
+    "colorhex": "0.0.1",
+    "get-pixels": "^3.2.3",
+    "ndarray": "^1.0.18",
+    "node-range": "^0.1.0"
+  }
+}
