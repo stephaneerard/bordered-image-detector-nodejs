@@ -23,74 +23,53 @@ BorderDetector.prototype.GetPixelsOfBorder = function (pixels, thicknessPixels) 
             , colorsRange = range(0, colorInf - 1)
             ;
 
-        // fetch width with y = 0 (top)
+        var get_pixel_and_push = function (width, height, pixels, array) {
+            var pixel = colorsRange.map((colorPos) => {
+                return pixels.get(width, height, colorPos);
+            });
+
+            var hex = color2hex(pixel);
+            if (hex.indexOf("NaN") > -1) return;
+
+            array.push(hex);
+        };
+
+
         thickRange.forEach((thickerPos) => {
+
+            // fetch width with y = 0 (top)
             widthRange.forEach((widthPos) => {
                 var width_occurence = thickerPos + widthPos;
                 var height_occurence = 0;
 
-                var pixel = colorsRange.map((colorPos) => {
-                    return pixels.get(width_occurence, height_occurence, colorPos);
-                });
+                get_pixel_and_push(width_occurence, height_occurence, pixels, pixels_of_border);
 
-                var hex = color2hex(pixel);
-                if (hex.indexOf("NaN") > -1) return;
-
-                pixels_of_border.push(hex);
             });
-        });
 
-        // fetch width with y = height (bottom)
-        thickRange.forEach((thickerPos) => {
+            // fetch width with y = height (bottom)
             widthRange.forEach((widthPos) => {
                 var width_occurence = thickerPos + widthPos;
                 var height_occurence = height;
 
-                var pixel = colorsRange.map((colorPos) => {
-                    return pixels.get(width_occurence, height_occurence, colorPos);
-                });
-
-                var hex = color2hex(pixel);
-                if (hex.indexOf("NaN") > -1) return;
-
-                pixels_of_border.push(hex);
+                get_pixel_and_push(width_occurence, height_occurence, pixels, pixels_of_border);
             });
-        });
 
-        // fetch height with x = 0 (left)
-        thickRange.forEach((thickerPos) => {
+            // fetch height with x = 0 (left)
             heightRange.forEach((heightPos) => {
                 var width_occurence = 0;
                 var height_occurence = thickerPos + heightPos;
 
-                var pixel = colorsRange.map((colorPos) => {
-                    return pixels.get(width_occurence, height_occurence, colorPos);
-                });
+                get_pixel_and_push(width_occurence, height_occurence, pixels, pixels_of_border);
+            });
 
-                var hex = color2hex(pixel);
-                if (hex.indexOf("NaN") > -1) return;
-
-                pixels_of_border.push(hex);
-            })
-        });
-
-        // fetch height with x = 0 (right)
-        thickRange.forEach((thickerPos) => {
+            // fetch height with x = 0 (right)
             heightRange.forEach((heightPos) => {
                 var width_occurence = width;
                 var height_occurence = thickerPos + heightPos;
 
-                var pixel = colorsRange.map((colorPos) => {
-                    return pixels.get(width_occurence, height_occurence, colorPos);
-                });
-
-                var hex = color2hex(pixel);
-                if (hex.indexOf("NaN") > -1) return;
-
-                pixels_of_border.push(hex);
-            })
+                get_pixel_and_push(width_occurence, height_occurence, pixels, pixels_of_border);
+            });
         });
-
 
         resolve(pixels_of_border);
 
