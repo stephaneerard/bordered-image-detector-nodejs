@@ -1,5 +1,5 @@
 {
-  "name": "bordered-image-detector",
+  "name": "frenchex-bordered-image-detector",
   "version": "1.0.0",
   "description": "Badly and stupidly detects if an image contains a uniform border",
   "main": "index.js",
